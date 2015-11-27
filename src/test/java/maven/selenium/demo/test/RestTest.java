@@ -29,8 +29,8 @@ public class RestTest {
 			String restURL_JSON = "http://api.openweathermap.org/data/2.5/weather?q=Amsterdam";
 
 			try {
-				testStatusCode(restURL_XML);
-				testStatusCode(restURL_JSON);
+//				testStatusCode(restURL_XML);
+//				testStatusCode(restURL_JSON);
 				testMimeType(restURL_XML,"application/xml");
 				testMimeType(restURL_JSON,"application/json");
 				testContent(restURL_XML,"lastName","Smith");
@@ -59,7 +59,7 @@ public class RestTest {
 			HttpUriRequest request = new HttpGet(restURL);
 			HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
 			
-			Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(),HttpStatus.SC_OK);
+			Assert.assertEquals(HttpStatus.SC_OK,httpResponse.getStatusLine().getStatusCode());
 		}
 		
 		public static void testMimeType(String restURL, String expectedMimeType) throws ClientProtocolException, IOException {

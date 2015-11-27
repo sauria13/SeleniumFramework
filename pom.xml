@@ -8,7 +8,7 @@
 	<description>A basic selenium demo for EPAM</description>
 
 	<!-- Added by Saul Alvarez as the dependencies -->
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8
 		</project.build.sourceEncoding>
@@ -34,6 +34,11 @@
 			<artifactId>testng</artifactId>
 			<version>6.8</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20151123</version>
 		</dependency>
 	</dependencies>
 
