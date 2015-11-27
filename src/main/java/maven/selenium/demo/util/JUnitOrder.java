@@ -18,7 +18,6 @@ public class JUnitOrder extends BlockJUnit4ClassRunner{
     protected List<FrameworkMethod> computeTestMethods() {
         List<FrameworkMethod> list = super.computeTestMethods();
         Collections.sort(list, new Comparator<FrameworkMethod>() {
-            @Override
             public int compare(FrameworkMethod f1, FrameworkMethod f2) {
                 Order o1 = f1.getAnnotation(Order.class);
                 Order o2 = f2.getAnnotation(Order.class);
