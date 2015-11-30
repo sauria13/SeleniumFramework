@@ -16,6 +16,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
+import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -23,18 +24,20 @@ import org.xml.sax.SAXException;
 
 public class RestTest {
 
-		public static void main (String args[]) {
+		@Test
+		public void main () {
 			
 			String restURL_XML = "http://parabank.parasoft.com/parabank/services/bank/customers/12212/";
-			String restURL_JSON = "http://api.openweathermap.org/data/2.5/weather?q=Amsterdam";
-
+			String restURL_JSON = "http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=2de143494c0b295cca9337e1e96b00e0";
+								   
+			
 			try {
-//				testStatusCode(restURL_XML);
-//				testStatusCode(restURL_JSON);
+				testStatusCode(restURL_XML);
+				testStatusCode(restURL_JSON);
 				testMimeType(restURL_XML,"application/xml");
 				testMimeType(restURL_JSON,"application/json");
 				testContent(restURL_XML,"lastName","Smith");
-				testContentJSON(restURL_JSON,"name","Amsterdam");
+				testContentJSON(restURL_JSON,"name","London");
 				
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
@@ -58,14 +61,18 @@ public class RestTest {
 
 			HttpUriRequest request = new HttpGet(restURL);
 			HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
+			System.out.println(httpResponse);
 			
 			Assert.assertEquals(HttpStatus.SC_OK,httpResponse.getStatusLine().getStatusCode());
 		}
+		
 		
 		public static void testMimeType(String restURL, String expectedMimeType) throws ClientProtocolException, IOException {
 			
 			HttpUriRequest request = new HttpGet(restURL);
 			HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
+			
+			System.out.println(ContentType.getOrDefault(httpResponse.getEntity()).getMimeType());
 			
 			Assert.assertEquals(expectedMimeType,ContentType.getOrDefault(httpResponse.getEntity()).getMimeType());
 		}
@@ -74,6 +81,11 @@ public class RestTest {
 			
 			Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(restURL);
 			NodeList nodelist = doc.getElementsByTagName(element);
+			
+			System.out.println(doc.getDocumentElement());
+			System.out.println(doc.getDocumentElement().getFirstChild());
+			
+			System.out.println(nodelist.item(0).getTextContent());
 			
 			Assert.assertEquals(expectedValue,nodelist.item(0).getTextContent());		
 		}
@@ -88,8 +100,11 @@ public class RestTest {
 
 			// Convert the result as a String to a JSON object
 			JSONObject jo = new JSONObject(result);
+			
+			System.out.println(jo);
 
 			Assert.assertEquals(expectedValue, jo.getString(element));
 
+			System.out.println(jo.getString(element));
 		}
 }
